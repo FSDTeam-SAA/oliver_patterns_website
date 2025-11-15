@@ -6,20 +6,14 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { Button } from '../ui/button'
-import { useSession } from 'next-auth/react'
-// import { useGetUserProfile } from '@/lib/profileApi'
 
 // ==================== NAVBAR ====================
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const { data: sessionData, status } = useSession()
-  const accessToken = sessionData?.user?.accessToken || ''
-
-  // const { data: profileData } = useGetUserProfile(accessToken)
-  const isLoggedIn = status === 'authenticated'
-  // const userImage = profileData?.data?.profileImage || '/user-avatar.png'
+  // const { data: sessionData, status } = useSession()
+  // const isLoggedIn = status === 'authenticated'
 
   const links = [
     { name: 'Home', href: '/' },
@@ -30,7 +24,6 @@ export default function Navbar() {
     { name: 'Contact', href: '/contact' },
   ]
 
-  // Helper function to check active link (nested paths)
   const isActiveLink = (href: string) => {
     if (href === '/') return pathname === '/'
     const pathnameSegments = pathname.split('/').filter(Boolean)
@@ -39,13 +32,13 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-[#719cec14] backdrop-blur-3xl fixed w-full z-50 shadow-sm">
+    <nav className="bg-white py-3 sticky top-0 w-full z-50 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left - Logo */}
           <Link href={'/'}>
             <div className="flex-shrink-0 text-[#5A8DEE] font-semibold text-lg md:text-xl font-sans">
-              The <span className="font-bold text-2xl">Unburdened</span> Mind
+              <Image src="/assets/navlogo.png" alt="Logo" width={100} height={100} />
             </div>
           </Link>
 
@@ -75,41 +68,29 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Right - Buttons */}
+          {/* Right - Desktop Buttons */}
           <div className="hidden md:flex items-center gap-2 space-x-3">
-            <Link href={'/contact'}>
+            <Link href={'/signup'}>
               <Button
-                variant="outline"
-                className="border border-[#5A8DEE] px-8 bg-transparent text-[#5A8DEE] hover:bg-[#5A8DEE] hover:text-white transition-all duration-200"
+                className="border border-[#0C2661] px-8 h-[48px] bg-transparent text-[#0C2661] hover:bg-transparent transition-all duration-200"
               >
-                Ask David
+                Sign Up Free
               </Button>
             </Link>
-
-            {/* {isLoggedIn ? (
-              <Link className="cursor-pointer" href={'/account'}>
-                <div className="relative w-10 h-10">
-                  <Image
-                    src={userImage}
-                    alt="User Avatar"
-                    fill
-                    sizes="40px"
-                    className="rounded-full object-cover border-2 border-[#5A8DEE]"
-                  />
-                </div>
-              </Link>
-            ) : (
-              <Button asChild variant="default" className="px-10">
-                <Link href="/signin">Login</Link>
+            <Link href={'/login'}>
+              <Button
+                className="border border-[#5A8DEE] px-8 h-[48px] !bg-[linear-gradient(180deg,#355AC7_0%,#1271F2_100%)] text-[#FBEFEC] hover:text-white transition-all duration-200"
+              >
+                Log in
               </Button>
-            )} */}
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu Items */}
       {menuOpen && (
-        <div className="md:hidden bg-[#e6e6eb14] backdrop-blur-md border-t border-[#5A8DEE20] px-4 pb-4 space-y-2 animate-fadeIn">
+        <div className="md:hidden bg-white/70 backdrop-blur-md border-t border-[#5A8DEE20] px-4 pb-4 space-y-4 animate-fadeIn">
           {links.map((link) => (
             <Link
               key={link.name}
@@ -123,33 +104,23 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Mobile Actions */}
-          <div className="pt-2 flex flex-col space-y-2">
-            <Link href={'/contact'}>
-              <Button variant="default" className="w-full">
-                Ask David
+          {/* Mobile Buttons */}
+          <div className="pt-2 flex flex-col space-y-3">
+            <Link href={'/signup'}>
+              <Button
+                className="w-full py-3 px-4 !bg-[linear-gradient(180deg,#355AC7_0%,#1271F2_100%)] text-white font-semibold rounded-lg shadow-md"
+              >
+                Sign Up Free
               </Button>
             </Link>
 
-            {/* {isLoggedIn ? (
-              <Link className="cursor-pointer" href={'/account'}>
-                <div className="flex items-center space-x-2 mt-2 ">
-                  <div className="relative w-10 h-10">
-                    <Image
-                      src={userImage}
-                      alt="User Avatar"
-                      fill
-                      className="rounded-full object-cover border-2 border-[#5A8DEE]"
-                    />
-                  </div>
-                  <span className="text-[#5A8DEE] font-medium">Profile</span>
-                </div>
-              </Link>
-            ) : (
-              <Button asChild variant="secondary" className="w-full">
-                <Link href="/signin">Login</Link>
+            <Link href={'/login'}>
+              <Button
+                className="w-full py-3 px-4 !bg-transparent border border-[#5A8DEE] text-[#5A8DEE] font-semibold rounded-lg"
+              >
+                Log in
               </Button>
-            )} */}
+            </Link>
           </div>
         </div>
       )}

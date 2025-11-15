@@ -14,6 +14,11 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      backgroundImage: {
+        'gradient': 'linear-gradient(180deg, #355AC7 0%, #1271F2 100%)',
+        'lightblue': 'linear-gradient(90.93deg, #CCE5FF 3.19%, #D7E8FB 96.81%)',
+
+      },
       borderColor: {
         DEFAULT: 'var(--foreground)',
       },

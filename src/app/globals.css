@@ -78,3 +78,12 @@
     animation: shimmer-slow 3s infinite linear;
   }
 }
+
+html {
+  font-family: var(--font-manrope), sans-serif;
+}
+
+h1 {
+  font-family: var(--font-urbanist), sans-serif;
+}
+
