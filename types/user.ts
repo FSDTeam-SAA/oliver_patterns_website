@@ -12,7 +12,7 @@ export interface UserProfile {
   gender: string | null;
   role: "USER" | "ADMIN" | string;
   stripeAccountId: string | null;
-  bio: string | null;
+  bio: string | null |undefined  ;
   isActive: boolean;
   profileImage: string;
   multiProfileImage: string[];
@@ -22,6 +22,7 @@ export interface UserProfile {
   otpVerified: boolean;
   resetExpires: string | null;
   isVerified: boolean;
+  
   refreshToken: string;
   hasActiveSubscription: boolean;
   subscriptionExpireDate: string | null;
