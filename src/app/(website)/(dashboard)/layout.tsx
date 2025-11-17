@@ -7,12 +7,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <SidebarProvider defaultOpen={true} className="px-8">
         <AppSidebar />
-        <main className="w-full">
+
+        <main className="w-full lg:ml-64">
           <div className="lg:hidden">
             <SidebarTrigger />
           </div>
-          <div className="w-full">
-            <div className="pb-10">{children}</div>
+          <div className="w-full mt-10 mb-20">
+            <div>{children}</div>
           </div>
         </main>
       </SidebarProvider>
