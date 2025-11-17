@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-
 import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -45,7 +44,7 @@ export default function SigninPage() {
       const res = await signIn('credentials', {
         email: values.email,
         password: values.password,
-        redirect: false, 
+        redirect: false,
       })
 
       setIsLoading(false)
@@ -61,7 +60,7 @@ export default function SigninPage() {
       }
 
       toast.success('Login successful 🎉')
-      router.push('/') // ✅ redirect to homepage
+      router.push('/')
     } catch (err: any) {
       setIsLoading(false)
       toast.error(err?.message || 'Login failed')
@@ -76,8 +75,8 @@ export default function SigninPage() {
             Welcome
           </h1>
           <p className="text-[#6C757D] text-center text-sm md:text-base">
-            Access your account to manage.           
-             </p>
+            Access your account to manage.
+          </p>
         </div>
 
         <Form {...form}>

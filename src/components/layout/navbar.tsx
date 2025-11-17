@@ -7,13 +7,10 @@ import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { Button } from '../ui/button'
 
-// ==================== NAVBAR ====================
+
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
-
-  // const { data: sessionData, status } = useSession()
-  // const isLoggedIn = status === 'authenticated'
 
   const links = [
     { name: 'Home', href: '/' },
@@ -59,9 +56,8 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-[#5A8DEE] font-medium transition-all duration-200 hover:opacity-80 ${
-                  isActiveLink(link.href) ? 'after:w-full' : 'after:w-0'
-                } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-[#5A8DEE] after:transition-all after:duration-300 hover:after:w-full`}
+                className={`relative text-[#5A8DEE] font-medium transition-all duration-200 hover:opacity-80 ${isActiveLink(link.href) ? 'after:w-full' : 'after:w-0'
+                  } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-[#5A8DEE] after:transition-all after:duration-300 hover:after:w-full`}
               >
                 {link.name}
               </Link>
@@ -77,7 +73,7 @@ export default function Navbar() {
                 Sign Up Free
               </Button>
             </Link>
-            <Link href={'/login'}>
+            <Link href={'/signin'}>
               <Button
                 className="border border-[#5A8DEE] px-8 h-[48px] !bg-[linear-gradient(180deg,#355AC7_0%,#1271F2_100%)] text-[#FBEFEC] hover:text-white transition-all duration-200"
               >
@@ -96,9 +92,8 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className={`block text-[#5A8DEE] font-medium py-2 border-b border-[#5A8DEE20] ${
-                isActiveLink(link.href) ? 'underline underline-offset-4' : ''
-              }`}
+              className={`block text-[#5A8DEE] font-medium py-2 border-b border-[#5A8DEE20] ${isActiveLink(link.href) ? 'underline underline-offset-4' : ''
+                }`}
             >
               {link.name}
             </Link>
@@ -114,7 +109,7 @@ export default function Navbar() {
               </Button>
             </Link>
 
-            <Link href={'/login'}>
+            <Link href={'/signin'}>
               <Button
                 className="w-full py-3 px-4 !bg-transparent border border-[#5A8DEE] text-[#5A8DEE] font-semibold rounded-lg"
               >
