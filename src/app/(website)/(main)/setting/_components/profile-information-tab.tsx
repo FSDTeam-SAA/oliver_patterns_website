@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Camera } from 'lucide-react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
+import { UserProfileResponse } from '../../../../../../types/user'
 
 interface FormData {
     fullName: string
@@ -13,6 +18,7 @@ interface FormData {
 }
 
 export default function ProfileInformationTab() {
+
     const [formData, setFormData] = useState<FormData>({
         fullName: '',
         email: '',
@@ -21,11 +27,14 @@ export default function ProfileInformationTab() {
         bio: '',
     })
 
+    const router = useRouter()
+    const session = useSession()
+    const token = session.data?.user?.accessToken
+
     const [imageUrl, setImageUrl] = useState<string>('/profile-picture.jpg')
 
-    // Log form data on mount and when it changes
     useEffect(() => {
-     
+
     }, [formData])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,13 +58,85 @@ export default function ProfileInformationTab() {
         }
     }
 
+    const { mutate: updateProfile, isPending } = useMutation({
+        mutationFn: async (data: {
+            name: string
+            email: string
+            username: string
+            phoneNumber: string
+            bio: string
+        }) => {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/user/me`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        , 'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        username: data.username,
+                        phoneNumber: data.phoneNumber,
+                        bio: data.bio
+                    }),
+                }
+            )
+
+            const result = await res.json()
+            if (!res.ok) throw new Error(result.message || 'profile failed')
+            return result
+        },
+        onSuccess: (data) => {
+            toast.success(data.message || 'Profile update successfully 🎉')
+            router.push('/signin')
+        },
+        onError: (error) => {
+            toast.error(error.message || 'Profile change failed')
+        },
+    })
+
+    const getUser = useQuery<UserProfileResponse>({
+        queryKey: ['user'],
+        queryFn: async () => {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            const result = await res.json()
+            if (!res.ok) throw new Error(result.message || 'Failed to fetch user')
+            return result
+        },
+    })
+
+    console.log('[v0] User Data:', getUser.data?.data)
+
+    // useEffect(() => {
+    //     if (getUser.data) {
+    //         setFormData({
+    //             fullName: getUser.data.data.name,
+    //             email: getUser.data.data.email,
+    //             username: getUser.data.data.username,
+    //             phoneNumber: getUser.data.data.phoneNumber,
+    //             bio: getUser.data.data.bio
+    //         })
+    //     }
+    // }, [getUser.data])
+
+
+
     const handleUpdateProfile = () => {
-        console.log('[v0] Update Profile Button Clicked')
-        console.log('[v0] Submitting Form Data:', {
-            ...formData,
-            timestamp: new Date().toISOString(),
-        })
-        alert('Profile updated! Check console for data.')
+        updateProfile(
+            {
+                name: formData.fullName,
+                email: formData.email,
+                username: formData.username,
+                phoneNumber: formData.phoneNumber,
+                bio: formData.bio
+            }
+        )
     }
 
     const handleReset = () => {

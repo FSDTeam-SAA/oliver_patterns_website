@@ -1,7 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 interface PasswordFormData {
   currentPassword: string
@@ -10,10 +14,14 @@ interface PasswordFormData {
 }
 
 export default function ChangesPasswordTab() {
+  const router = useRouter()
+  const session = useSession()
+  const token = session.data?.user?.accessToken
   const [formData, setFormData] = useState<PasswordFormData>({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
+
   })
 
   const [visibility, setVisibility] = useState({
@@ -44,23 +52,50 @@ export default function ChangesPasswordTab() {
       ...prev,
       [field]: !prev[field],
     }))
-   
+
   }
 
+
+  const { mutate: changesPassword, isPending } = useMutation({
+    mutationFn: async (data: {
+      currentPassword: string
+      newPassword: string
+    }) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+            , 'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            currentPassword: data.currentPassword,
+            newPassword: data.newPassword,
+            userId: session.data?.user?.id
+          }),
+        }
+      )
+
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.message || 'password failed')
+      return result
+    },
+    onSuccess: (data) => {
+      toast.success(data.message || 'Password changed successfully 🎉')
+
+      // Optional redirect after successful signup
+      router.push('/signin')
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Password failed')
+    },
+  })
+
+
+
   const handleUpdateProfile = () => {
-    console.log('[v0] Update Profile Button Clicked')
-    if (formData.newPassword !== formData.confirmPassword) {
-      console.log('[v0] Password mismatch error')
-      alert('New passwords do not match!')
-      return
-    }
-    console.log('[v0] Submitting Password Change:', {
-      currentPasswordProvided: !!formData.currentPassword,
-      newPasswordProvided: !!formData.newPassword,
-      passwordsMatch: formData.newPassword === formData.confirmPassword,
-      timestamp: new Date().toISOString(),
-    })
-    alert('Password updated! Check console for details.')
+    changesPassword(formData)
   }
 
   const handleReset = () => {
@@ -168,9 +203,9 @@ export default function ChangesPasswordTab() {
       <div className="flex gap-4 pt-4">
         <button
           onClick={handleUpdateProfile}
-          className="px-6 py-2.5  bg-[#0C2661] text-white font-medium text-sm rounded-lg hover:bg-[#0C2661]/90 transition-colors shadow-sm"
+          className="px-6 py-2.5  bg-[#0C2661] flex text-white items-center font-medium text-sm rounded-lg hover:bg-[#0C2661]/90 transition-colors shadow-sm"
         >
-          Update Profile
+          Update Profile {isPending && <Loader2 className="animate-spin w-4 h-4 ml-2" />}
         </button>
         <button
           onClick={handleReset}
