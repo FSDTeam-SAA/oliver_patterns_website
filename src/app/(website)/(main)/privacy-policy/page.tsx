@@ -1,15 +1,15 @@
-import { HeroBanner } from '@/components/shared/subBanner'
+// import { HeroBanner } from '@/components/shared/subBanner'
 
 const page = () => {
   return (
     <div>
       <div className="pt-20 md:pt-24 lg:pt-28">
-        <HeroBanner
+        {/* <HeroBanner
           image="/images/contact-banner.jpg"
           height={272}
           title="Confidentiality & Trust"
           description={`Ensuring Your Privacy in Every Interaction`}
-        />
+        /> */}
       </div>
 
       {/* Privacy Policy section */}
