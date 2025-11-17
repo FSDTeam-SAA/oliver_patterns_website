@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import AuthLayout from './authLayout'
 import { useState } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -78,10 +78,10 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthLayout>
-      <div className="space-y-6 md:space-y-8">
+      <div className="space-y-6 md:space-y-8  bg-[#EFF7FF] w-4xl p-6 md:p-10">
         <div className="text-start space-y-3">
-          <h1 className="text-2xl font-bold text-[#71A899]">Reset Password</h1>
-          <p className="text-[#6C757D]">Enter your new password below.</p>
+          <h1 className="text-2xl font-bold text-[#0C2661] text-center"> Change Password</h1>
+          <p className="text-[#6C757D] text-center">Enter your new password below.</p>
         </div>
 
         <Form {...form}>
@@ -155,9 +155,9 @@ export default function ResetPasswordPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#71A899] hover:bg-[#71A899]/90 text-white"
+              className="w-full bg-[#0C2661] hover:bg-[#0C2661]/90 text-white"
             >
-              {isPending ? 'Resetting...' : 'Reset Password'}
+            Change Password {isPending && <Loader2/>}
             </Button>
           </form>
         </Form>

@@ -18,6 +18,7 @@ import AuthLayout from './authLayout'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 
 const forgotSchema = z.object({
   email: z.string().email('Invalid email'),
@@ -60,12 +61,12 @@ export default function ForgotPasswordPage() {
 
   return (
     <AuthLayout>
-      <div className="space-y-6 bg-white shadow-2xl p-5 rounded-lg">
+      <div className="space-y-6 bg-[#EFF7FF] w-4xl shadow-2xl p-5 rounded-lg">
         <div className="text-start space-y-3">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#71A899]">
+          <h1 className="text-2xl md:text-3xl text-center font-bold text-[#0C2661]">
             Forgot Password
           </h1>
-          <p className="text-[#6C757D]">
+          <p className="text-[#6C757D] text-center">
             Enter your email to recover your password
           </p>
         </div>
@@ -90,9 +91,9 @@ export default function ForgotPasswordPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#71A899] hover:bg-[#71A899]/90 text-white"
+              className="w-full bg-[#0C2661] hover:bg-[#0C2661]/90 text-white"
             >
-              {isPending ? 'Sending OTP...' : 'Send OTP'}
+            Send OTP { isPending && <Loader2 className="animate-spin" /> }
             </Button>
           </form>
         </Form>

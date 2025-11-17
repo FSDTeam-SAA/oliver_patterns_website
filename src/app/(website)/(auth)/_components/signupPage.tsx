@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import AuthLayout from './authLayout'
 import Link from 'next/link'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -50,10 +50,9 @@ export default function SignupPage() {
     },
   })
 
-  // --- React Query Mutation for Signup ---
   const { mutate: registerUser, isPending } = useMutation({
     mutationFn: async (data: {
-      fullName: string
+      name: string
       email: string
       password: string
     }) => {
@@ -84,7 +83,7 @@ export default function SignupPage() {
 
   const onSubmit = (values: z.infer<typeof signupSchema>) => {
     const payload = {
-      fullName: `${values.firstName} ${values.lastName}`,
+      name: `${values.firstName} ${values.lastName}`,
       email: values.email,
       password: values.password,
     }
@@ -93,24 +92,24 @@ export default function SignupPage() {
 
   return (
     <AuthLayout>
-      <div className="space-y-6 md:space-y-10 bg-white shadow-2xl p-5 rounded-lg">
+      <div className="space-y-6 md:space-y-10 w-4xl bg-[#EFF7FF] shadow-2xl p-5 rounded-lg">
         {/* Heading */}
         <div className="space-y-2 text-start">
           <h1
             style={{ fontFamily: 'var(--font-playfair)' }}
-            className="text-2xl md:text-[25px] lg:text-[32px] leading-[1.5] font-bold text-[#71A899]"
+            className="text-2xl md:text-[25px] lg:text-[32px] text-center leading-[1.5] font-bold text-[#0C2661]"
           >
             Create Your Account
           </h1>
-          <p className="text-[#6C757D] leading-[1.5]">
-            Connect families with trusted care — join today.
+          <p className="text-[#6C757D] text-center leading-[1.5]">
+            Connect with trusted care join grants.
           </p>
         </div>
 
         {/* Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               <FormField
                 control={form.control}
                 name="firstName"
@@ -226,10 +225,10 @@ export default function SignupPage() {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full bg-[#71A899] hover:bg-[#71A899]/90 text-white"
+              className="w-full bg-[#0C2661] hover:bg-[#0C2661]/90 text-white"
               disabled={isPending}
             >
-              {isPending ? 'Creating account...' : 'Sign Up'}
+              Sign Up { isPending && <Loader2 className='animate-spin '/>}
             </Button>
 
             {/* Sign In link */}
@@ -237,7 +236,7 @@ export default function SignupPage() {
               Already have an account?{' '}
               <Link
                 href="/signin"
-                className="text-[#71A899] font-medium hover:underline"
+                className="text-[#0C2661] font-medium hover:underline"
               >
                 Log In
               </Link>
