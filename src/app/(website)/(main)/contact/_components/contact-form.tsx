@@ -14,27 +14,86 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
+// Define the form schema
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  email: z.string(),
-  phone: z.string(),
-  companyName: z.string(),
-  subject: z.string(),
-  message: z.string(),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  phone: z.string().min(1, {
+    message: "Phone number is required.",
+  }),
+  companyName: z.string().min(1, {
+    message: "Company name is required.",
+  }),
+  subject: z.string().min(1, {
+    message: "Subject is required.",
+  }),
+  message: z.string().min(1, {
+    message: "Message is required.",
+  }),
 });
 
+// Define TypeScript type from the schema
+type FormData = z.infer<typeof formSchema>;
+
 const ContactForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const session = useSession();
+  const token = session?.data?.user?.accessToken;
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      email: "",
+      phone: "",
+      companyName: "",
+      subject: "",
+      message: "",
     },
   });
 
-  const onSubmit = () => {};
+  const { mutateAsync, isPending } = useMutation({
+    mutationKey: ["contact"],
+    mutationFn: async (data: FormData) => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to send message: ${res.statusText}`);
+      }
+
+      return await res.json();
+    },
+    onSuccess: () => {
+      form.reset();
+      toast.success("Message sent successfully!");
+    },
+    onError: (error: Error) => {
+      console.error("Error sending message:", error);
+      toast.error(error.message);
+    },
+  });
+
+  const onSubmit = async (values: FormData) => {
+    try {
+      await mutateAsync(values);
+    } catch (error) {
+      console.log("error from contact: ", error);
+    }
+  };
 
   return (
     <div>
@@ -51,7 +110,6 @@ const ContactForm = () => {
                     <FormControl>
                       <Input placeholder="Name Here" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -66,9 +124,8 @@ const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="Email Here" {...field} />
+                      <Input placeholder="Email Here" type="email" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -85,9 +142,12 @@ const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="Phone Number Here" {...field} />
+                      <Input
+                        placeholder="Phone Number Here"
+                        type="tel"
+                        {...field}
+                      />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -104,12 +164,28 @@ const ContactForm = () => {
                     <FormControl>
                       <Input placeholder="Company Name Here" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+          </div>
+
+          {/* Add the missing subject field */}
+          <div>
+            <FormField
+              control={form.control}
+              name="subject"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Subject</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Subject Here" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <div>
@@ -126,14 +202,20 @@ const ContactForm = () => {
                       {...field}
                     />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
+
           <div className="text-right">
-            <Button type="submit">Send Message</Button>
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="disabled:cursor-not-allowed"
+            >
+              {isPending ? "Sending Message..." : "Send Message"}
+            </Button>
           </div>
         </form>
       </Form>
