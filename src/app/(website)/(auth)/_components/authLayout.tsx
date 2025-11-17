@@ -4,20 +4,12 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      {/* Left Side with Only Background Image */}
-      <div
-        className="hidden md:flex items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/auth.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      ></div>
+    <div className="min-h-screen mx-auto bg-[#DEEEFF] grid grid-cols-1 md:grid-cols-1">
 
-      {/* Right Side Form */}
-      <div className="flex items-center justify-center px-5">
-        <div className="w-full max-w-xl">{children}</div>
+      <div className="flex items-center justify-center px-5 w-full h-full">
+        <div className="w-full max-w-xl flex items-center justify-center">
+          {children}
+        </div>
       </div>
     </div>
   )

@@ -1,15 +1,14 @@
-import { HeroBanner } from '@/components/shared/subBanner'
+"use client"
+
+import { Hero } from "@/components/web/Hero"
+
 
 const page = () => {
+
   return (
     <div>
       <div className="pt-20 md:pt-24 lg:pt-28">
-        <HeroBanner
-          image="/images/contact-banner.jpg"
-          height={272}
-          title="Confidentiality & Trust"
-          description={`Ensuring Your Privacy in Every Interaction`}
-        />
+        <Hero />
       </div>
 
       {/* Privacy Policy section */}

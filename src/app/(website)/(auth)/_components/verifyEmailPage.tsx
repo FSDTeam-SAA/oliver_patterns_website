@@ -116,10 +116,10 @@ export default function VerifyEmailPage() {
 
   return (
     <AuthLayout>
-      <div className="space-y-6 p-5">
+      <div className="space-y-6 p-5 bg-[#EFF7FF] w-4xl md:p-10 ">
         <div className="text-start space-y-4">
-          <h1 className="text-2xl font-bold text-[#71A899]">Verify Email</h1>
-          <p className="text-[#6C757D]">
+          <h1 className="text-2xl font-bold text-[#0C2661] text-center">Verify Email</h1>
+          <p className="text-[#6C757D] text-center">
             Enter OTP to verify your email address
           </p>
         </div>
@@ -140,7 +140,7 @@ export default function VerifyEmailPage() {
                             if (el) inputRefs.current[i] = el
                           }}
                           maxLength={1}
-                          className="w-10 h-10 md:w-12 md:h-12 text-center text-sm md:text-lg font-semibold border-2 focus:border-[#71A899]"
+                          className="w-10 h-10 md:w-14 md:h-14 text-center text-sm md:text-lg font-semibold rounded-xl border-2 focus:border-[#0C2661]"
                           value={field.value[i] || ''}
                           onChange={(e) => handleChange(e, i, field)}
                         />
@@ -164,11 +164,10 @@ export default function VerifyEmailPage() {
                 type="button"
                 onClick={() => resendOtp()}
                 disabled={timeLeft > 0 || isResending}
-                className={`${
-                  timeLeft > 0
+                className={`${timeLeft > 0
                     ? 'text-gray-400 cursor-not-allowed'
-                    : 'text-[#71A899] underline font-medium'
-                }`}
+                    : 'text-[#0C2661] underline font-medium'
+                  }`}
               >
                 {isResending ? 'Resending...' : 'Resend OTP'}
               </button>
@@ -177,7 +176,7 @@ export default function VerifyEmailPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#71A899] hover:bg-[#71A899]/90 text-white"
+              className="w-full bg-[#0C2661] hover:bg-[#0C2661]/90 text-white"
             >
               {isPending ? 'Verifying...' : 'Verify'}
             </Button>

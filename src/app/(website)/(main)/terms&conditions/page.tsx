@@ -1,15 +1,10 @@
-import { HeroBanner } from '@/components/shared/subBanner'
+import { Hero } from "@/components/web/Hero"
 
 const page = () => {
   return (
     <div>
       <div className="pt-20 md:pt-24 lg:pt-28">
-        <HeroBanner
-          image="/images/contact-banner.jpg"
-          height={272}
-          title="Legal Framework & User Agreement"
-          description={`Protecting Your Interests with Precision and Elegance`}
-        />
+        <Hero/>
       </div>
 
       {/* terms and conditions section */}
