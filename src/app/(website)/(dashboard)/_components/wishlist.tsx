@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {} from "@/components/ui/pagination";
 import { DeleteContent } from "./delete-contact";
 
 interface Contact {
