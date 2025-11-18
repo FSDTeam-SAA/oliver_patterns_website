@@ -14,10 +14,9 @@ export default function Navbar() {
 
   const links = [
     { name: 'Home', href: '/' },
+    { name: 'Find Grants', href: '/find-grants' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
-    { name: 'Blogs', href: '/blogs' },
-    { name: 'Services', href: '/services' },
-    { name: 'Podcast', href: '/podcast' },
     { name: 'Contact', href: '/contact' },
   ]
 
