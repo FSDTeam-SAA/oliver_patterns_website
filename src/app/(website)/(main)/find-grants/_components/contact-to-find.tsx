@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const ContactToFind = () => {
@@ -11,9 +12,11 @@ const ContactToFind = () => {
           Join thousands of that have already discovered and secured funding through our platform.
         </p>
         <div className='flex items-center justify-center py-4 md:py-6 lg:py-7'>
+        <Link href="/contact">
             <button className='bg-gradient-to-b from-[#355AC7] to-[#1271F2] cursor-pointer h-[41px] text-base font-semibold leading-[150%] text-white py-2 px-10 rounded-[10px]'>
                 Contact
             </button>
+        </Link>
         </div>
         <p className="text-sm font-normal text-[#424242] leading-[150%] text-center">
           No credit card required. Free plan available.

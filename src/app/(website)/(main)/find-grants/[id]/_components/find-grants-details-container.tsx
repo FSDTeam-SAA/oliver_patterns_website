@@ -4,7 +4,6 @@ import moment from "moment";
 import Image from "next/image";
 import React, { useState } from "react";
 import WishlistModal from "./wishlist-modal";
-import GrantCard from "./grants-cart";
 
 export interface SingleGrantResponse {
   status: boolean;
@@ -156,7 +155,27 @@ const FindGrantsDetailsContainer = ({ id }: { id: string }) => {
             />
            </div>
 
-             <GrantCard {...grantData} />
+           {/* cart data  */}
+
+           <div>
+            <p className="grid grid-cols-1 md:grid-cols-2"> <span className="text-sm md:text-base font-semibold text-[#686869] leading-[150%]">Location</span> <span className="flex items-center">{grant?.location?.map((item)=>{
+              return <div key={item} >
+                {item}
+              </div>
+            })}</span></p>
+            <p className="grid grid-cols-1 md:grid-cols-2 py-3 md:py-4"> <span className="text-sm md:text-base font-semibold text-[#686869] leading-[150%]">funding</span> <span>{grant?.funding}</span></p>
+             <p className="grid grid-cols-1 md:grid-cols-2"> <span className="text-sm md:text-base font-semibold text-[#686869] leading-[150%]">Activities</span> <span className="flex items-center">{grant?.activity?.map((item)=>{
+              return <div key={item} >
+                {item}
+              </div>
+            })}</span></p>
+            <p className="grid grid-cols-1 md:grid-cols-2 py-3 md:py-4"> <span className="text-sm md:text-base font-semibold text-[#686869] leading-[150%]">Industries</span> <span className="flex items-center">{grant?.industry?.map((item)=>{
+              return <div key={item} >
+                {item}
+              </div>
+            })}</span></p>
+            <p className="grid grid-cols-1 md:grid-cols-2"> <span className="text-sm md:text-base font-semibold text-[#686869] leading-[150%]">funding Type</span> <span>{grant?.type}</span></p>
+           </div>
           </div>
         </div>
       </div>
