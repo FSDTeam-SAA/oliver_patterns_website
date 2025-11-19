@@ -10,8 +10,8 @@ export function PricingCard({
       className={cn(
         "rounded-2xl p-8 transition-all duration-300",
         plan?.name === "Premium"
-          ? "h-full md:h-[580px] rounded-[26px] bg-[linear-gradient(100deg,#DCE9F8_0%,#C0DEFF_100%)] shadow-[4px_4px_6px_rgba(0,0,0,0.16)] text-[#424242]"
-          : "h-full md:h-[450px] rounded-[26px] border border-[#96C7FF] bg-[#F5F9FF] shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
+          ? "h-full md:h-auto rounded-[26px] bg-[linear-gradient(100deg,#DCE9F8_0%,#C0DEFF_100%)] shadow-[4px_4px_6px_rgba(0,0,0,0.16)] text-[#424242]"
+          : "h-full md:h-auto rounded-[26px] border border-[#96C7FF] bg-[#F5F9FF] shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
       )}
     >
       {/* Badge and Name */}
