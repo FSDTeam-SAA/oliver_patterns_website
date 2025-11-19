@@ -7,6 +7,7 @@ import { useDebounce } from "@/components/hooks/useDebounce";
 import ErrorContainer from "@/components/common/ErrorContainer/ErrorContainer";
 import NotFound from "@/components/common/NotFound/NotFound";
 import GrantLoadingSkeleton from "./grant-card-skeleton";
+import OliverDropDown from "@/components/ui/Oliver-Dropdown";
 export interface GrantResponse {
   status: boolean;
   message: string;
@@ -24,29 +25,96 @@ export interface GrantItem {
   type: string;
   funding: string;
   deadline: string; // ISO date string
-  location: string;
-  activity: string;
-  industry: string;
+  location: string[];
+  activity: string[];
+  industry: string[];
   description: string;
   imageUrl: string;
-  fileUrls?: string[]; // sometimes array exists
-  fileUrl?: string; // sometimes single file URL exists
-  status: "open" | "closed" | "upcoming";
-  createdAt: string;
-  updatedAt: string;
+  fileUrls?: string[]; // optional because some items have fileUrl or empty array
+  fileUrl?: string; // some entries use `fileUrl` instead of `fileUrls`
+  status: "upcoming" | "open" | "closed"; // you can expand as needed
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
   __v: number;
 }
 
+// industries data
+const INDUSTRY_ENUM = [
+  "General - Non-Industry Specific",
+  "Aeronautics",
+  "Agriculture",
+  "Automotive and Marine",
+  "Building, Construction and Engineering",
+  "Defence",
+  "Education",
+  "Energy and Renewables",
+  "Finance and Business Services",
+  "Food and Beverage",
+  "Healthcare, Medical, Biotechnology and Nanotechnology",
+  "Information Technology and Communication (ICT)",
+  "Media and Entertainment",
+  "Mining",
+  "Textile, Clothing and Footwear",
+  "Tourism",
+  "Other - Not Listed",
+];
+
+const industryOptions = INDUSTRY_ENUM.map((item) => ({
+  label: item,
+  value: item,
+}));
+
+// location data 
+const LOCATION_ENUM = [
+  "all Australia",
+  "National",
+  "Australian Capital Territory",
+  "New South Wales",
+  "Northern Territory",
+  "Queensland",
+  "South Australia",
+  "Tasmania",
+  "Victoria",
+  "Western Australia"
+];
+const locationOptions = LOCATION_ENUM.map((item) =>({
+  label: item,
+  value: item,
+}));
+
+// activity data 
+const ACTIVITY_ENUM = [
+  "General Operations",
+  "Environment and Sustainability",
+  "Export",
+  "Infrastructure / Equipment",
+  "Innovation and R&D",
+  "Manufacturing",
+  "Marketing",
+  "Start-up / Establishment",
+  "Training / Employment",
+  "Transport and Distribution",
+  "Wholesale and Retail Trade"
+];
+
+const activityOptions = ACTIVITY_ENUM.map((item)=>({
+  label: item,
+  value: item,
+}));
+
 const ExploreAvailableGrants = () => {
   const [search, setSearch] = React.useState<string>("");
+  const [industry, setIndustry] = React.useState<string>("");
+  const [location, setLocation] = React.useState<string>("");
+  const [activity, setActivity] = React.useState<string>("");
   const debouncedSearch = useDebounce(search, 500);
   let content;
   console.log(search);
   const { data, isLoading, isError, error } = useQuery<GrantResponse>({
-    queryKey: ["grants", debouncedSearch],
+    queryKey: ["grants", debouncedSearch, industry, location, activity],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/grant?search=${debouncedSearch}`
+        `${process.env.NEXT_PUBLIC_API_URL}/grant?search=${debouncedSearch}&industry=${industry}&location=${location}&activity=${activity}`
       );
       return res.json();
     },
@@ -136,7 +204,8 @@ const ExploreAvailableGrants = () => {
           <p className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#0C2661] leading-[150%]">
             Search 1,285 business grants worth $50B
           </p>
-          <div className="w-2/5 pt-4 md:pt-5 lg:pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-10"> 
+            <div className="md:col-span-1 pt-4 md:pt-5 lg:pt-6">
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -144,6 +213,29 @@ const ExploreAvailableGrants = () => {
               className="w-full h-[60px] p-4 outline-none rounded-[4px] border border-[#0C2661] bg-[#FAFCFF] text-[#0C2661] placeholder:text-[#8E938F] text-base font-normal leading-[150%]"
               placeholder="Search grants by keyword, title, or description"
             />
+          </div>
+          <div className="md:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 pt-4 md:pt-5 lg:pt-6"> 
+            <OliverDropDown
+              options={industryOptions}
+              placeholder="Select Business Industry"
+              value={industry}
+              onChange={setIndustry}
+            />
+             <OliverDropDown
+              options={locationOptions}
+              placeholder="Select Business Location"
+              value={location}
+              onChange={setLocation}
+            />
+            <OliverDropDown
+              options={activityOptions}
+              placeholder="Select Business Activity"
+              value={activity}
+              onChange={setActivity}
+            />
+          </div>
+          </div>
           </div>
         </div>
       </div>
