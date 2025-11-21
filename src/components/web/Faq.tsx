@@ -41,18 +41,26 @@ export function Faq() {
           <p className="text-[#424242] text-base">Find answers to common questions about our facilities</p>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
-          {faqs.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`} className="mb-3 border-0">
-              <AccordionTrigger className="bg-[#DEEEFF] hover:bg-blue-200 rounded-lg  px-6 py-4 text-left font-semibold text-[#0C2661] text-xl transition-colors">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="bg-blue-50 rounded-lg px-6 py-4 mt-0 text-gray-700 border-0">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+   <Accordion type="single" collapsible className="w-full">
+  {faqs.map((faq, index) => (
+    <AccordionItem
+      key={index}
+      value={`item-${index}`}
+      className="mb-3 border-0 overflow-hidden rounded-lg"
+    >
+      <AccordionTrigger className="bg-[#DEEEFF] cursor-pointer duration-300  hover:bg-blue-200 px-6 py-7 text-left font-semibold text-[#0C2661] text-xl transition-colors">
+        {faq.question}
+      </AccordionTrigger>
+
+      <AccordionContent
+        className="bg-[#DEEEFF] px-6 py-4 text-[#0C2661] text-base transition-all duration-300"
+      >
+        {faq.answer}
+      </AccordionContent>
+    </AccordionItem>
+  ))}
+</Accordion>
+
       </div>
     </div>
   )

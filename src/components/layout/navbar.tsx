@@ -64,19 +64,20 @@ export default function Navbar() {
           </div>
 
           {/* Right - Desktop Buttons */}
-          <div className="hidden md:flex items-center gap-2 space-x-3">
-            <Link href={'/signup'}>
-              <Button
-                className="border border-[#0C2661] px-8 h-[48px] bg-transparent text-[#0C2661] hover:bg-transparent transition-all duration-200"
-              >
-                Sign Up Free
-              </Button>
-            </Link>
+          <div className="hidden md:flex items-center gap-2 space-x-3">        
             <Link href={'/signin'}>
               <Button
-                className="border border-[#5A8DEE] px-8 h-[48px] !bg-[linear-gradient(180deg,#355AC7_0%,#1271F2_100%)] text-[#FBEFEC] hover:text-white transition-all duration-200"
+               variant="bg_border"
+                className="border border-[#5A8DEE]  h-[48px] !bg-white text-[#0C2661] px-[55px] hover:text-[#0C2661]/95 cursor-pointer hover:scale-105 duration-300 transition-all "
               >
-                Log in
+                Log in 
+              </Button>
+            </Link>
+               <Link href={'/signup'}>
+              <Button
+                className="border border-[#0C2661] px-8 h-[48px]  !bg-grdient text-white border-none cursor-pointer hover:scale-105 duration-300 hover:bg-transparent transition-all "
+              >
+                Sign Up Free
               </Button>
             </Link>
           </div>
@@ -100,21 +101,24 @@ export default function Navbar() {
 
           {/* Mobile Buttons */}
           <div className="pt-2 flex flex-col space-y-3">
-            <Link href={'/signup'}>
+          
+
+            <Link href={'/signin'}>
               <Button
-                className="w-full py-3 px-4 !bg-[linear-gradient(180deg,#355AC7_0%,#1271F2_100%)] text-white font-semibold rounded-lg shadow-md"
+                   variant="bg_border"
+                className="w-full border border-[#5A8DEE]  py-3 px-4 !bg-white text-[#0C2661]  hover:text-[#0C2661]/95 cursor-pointer transition-all duration-200 "
+              >
+                Log in
+              </Button>
+            </Link>
+              <Link href={'/signup'}>
+              <Button
+                className="w-full py-3 px-4 bg-gradient !text-white font-semibold border-none       rounded-lg shadow-md"
               >
                 Sign Up Free
               </Button>
             </Link>
 
-            <Link href={'/signin'}>
-              <Button
-                className="w-full py-3 px-4 !bg-transparent border border-[#5A8DEE] text-[#5A8DEE] font-semibold rounded-lg"
-              >
-                Log in
-              </Button>
-            </Link>
           </div>
         </div>
       )}
