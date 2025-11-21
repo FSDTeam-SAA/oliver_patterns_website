@@ -68,14 +68,14 @@ export default function Navbar() {
             <Link href={'/signin'}>
               <Button
                variant="bg_border"
-                className="border border-[#5A8DEE]  h-[48px] !bg-white text-[#0C2661] px-[55px] hover:text-[#0C2661]/95 cursor-pointer transition-all duration-200"
+                className="border border-[#5A8DEE]  h-[48px] !bg-white text-[#0C2661] px-[55px] hover:text-[#0C2661]/95 cursor-pointer hover:scale-105 duration-300 transition-all "
               >
                 Log in 
               </Button>
             </Link>
                <Link href={'/signup'}>
               <Button
-                className="border border-[#0C2661] px-8 h-[48px]  !bg-grdient text-white border-none cursor-pointer hover:bg-transparent transition-all duration-200"
+                className="border border-[#0C2661] px-8 h-[48px]  !bg-grdient text-white border-none cursor-pointer hover:scale-105 duration-300 hover:bg-transparent transition-all "
               >
                 Sign Up Free
               </Button>

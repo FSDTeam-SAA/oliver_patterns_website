@@ -178,7 +178,7 @@ export function Footer({
               <Button
                 onClick={handleSubscribe}
                 disabled={subscribeMutation.isPending}
-                className="!bg-gradient hover:bg-gradient/90 text-white px-6 h-[48px] rounded-md text-sm font-medium transition-colors whitespace-nowrap"
+                className="!bg-gradient hover:bg-gradient/90 text-white cursor-pointer hover:scale-105 duration-300 px-6 h-[48px] rounded-md text-sm font-medium  whitespace-nowrap"
               >
                 {subscribeMutation.isPending ? 'Subscribing...' : 'Subscribe'}
               </Button>
@@ -191,7 +191,7 @@ export function Footer({
                   href={socialLinks.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center  cursor-pointer hover:scale-105 duration-300"
                 >
                   <Facebook className="w-5 h-5 text-white" />
                 </Link>
@@ -201,7 +201,7 @@ export function Footer({
                   href={socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center  cursor-pointer hover:scale-105 duration-300 "
                 >
                   <Instagram className="w-5 h-5 text-white" />
                 </Link>
@@ -211,7 +211,7 @@ export function Footer({
                   href={socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center cursor-pointer hover:scale-105 duration-300"
                 >
                   <Linkedin className="w-5 h-5 text-white" />
                 </Link>
@@ -221,7 +221,7 @@ export function Footer({
                   href={socialLinks.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-[#68706A] hover:bg-[#5A8DEE] rounded flex items-center justify-center cursor-pointer hover:scale-105 duration-300"
                 >
                   <Twitter className="w-5 h-5 text-white" />
                 </Link>
