@@ -38,7 +38,7 @@ export function HowItWorks() {
             return (
               <Card
                 key={step.title}
-                className="bg-[linear-gradient(90.93deg,#CCE5FF_3.19%,#D7E8FB_96.81%)] border-0 rounded-2xl transition-shadow"
+                className="bg-[linear-gradient(90.93deg,#CCE5FF_3.19%,#D7E8FB_96.81%)] border-0 rounded-2xl  hover:scale-95 duration-300 ease-in-out hover:shadow-[0_4px_8px_rgba(0,0,0,0.10)] "
                 style={{ boxShadow: '0px 4px 4px 0px #00000014' }}
               >
                 <CardHeader className="flex justify-center items-center">
