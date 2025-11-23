@@ -65,7 +65,7 @@ const industryOptions = INDUSTRY_ENUM.map((item) => ({
   value: item,
 }));
 
-// location data 
+// location data
 const LOCATION_ENUM = [
   "all Australia",
   "National",
@@ -76,14 +76,14 @@ const LOCATION_ENUM = [
   "South Australia",
   "Tasmania",
   "Victoria",
-  "Western Australia"
+  "Western Australia",
 ];
-const locationOptions = LOCATION_ENUM.map((item) =>({
+const locationOptions = LOCATION_ENUM.map((item) => ({
   label: item,
   value: item,
 }));
 
-// activity data 
+// activity data
 const ACTIVITY_ENUM = [
   "General Operations",
   "Environment and Sustainability",
@@ -95,18 +95,17 @@ const ACTIVITY_ENUM = [
   "Start-up / Establishment",
   "Training / Employment",
   "Transport and Distribution",
-  "Wholesale and Retail Trade"
+  "Wholesale and Retail Trade",
 ];
 
-const activityOptions = ACTIVITY_ENUM.map((item)=>({
+const activityOptions = ACTIVITY_ENUM.map((item) => ({
   label: item,
   value: item,
 }));
 
 const ExploreAvailableGrants = () => {
-
   const session = useSession();
-  const token = (session?.data?.user as {accessToken: string})?.accessToken;
+  const token = (session?.data?.user as { accessToken: string })?.accessToken;
   const [search, setSearch] = React.useState<string>("");
   const [industry, setIndustry] = React.useState<string>("");
   const [location, setLocation] = React.useState<string>("");
@@ -117,15 +116,13 @@ const ExploreAvailableGrants = () => {
   const { data, isLoading, isError, error } = useQuery<GrantResponse>({
     queryKey: ["grants", debouncedSearch, industry, location, activity],
     queryFn: async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/grant`,{
-          method: "GET",
-          headers : {
-            // "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
-          }
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grant`, {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.json();
     },
     enabled: debouncedSearch !== undefined,
@@ -211,41 +208,45 @@ const ExploreAvailableGrants = () => {
     <div className="py-10 md:py-16 lg:py-20 ">
       <div className="bg-[linear-gradient(91deg,#CCE5FF_3.19%,#D7E8FB_96.81%)] mb-10 md:mb-16 lg:mb-20">
         <div className="container mx-auto py-6 px-4 md:px-0">
-          <p className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#0C2661] leading-[150%]">
+          <p className="text-lg md:text-[22px] lg:text-2xl font-semibold text-[#0C2661] leading-[150%]">
             Search 1,285 business grants worth $50B
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-10"> 
-            <div className="md:col-span-1 pt-4 md:pt-5 lg:pt-6">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              className="w-full h-[60px] p-4 outline-none rounded-[4px] border border-[#0C2661] bg-[#FAFCFF] text-[#0C2661] placeholder:text-[#8E938F] text-base font-normal leading-[150%]"
-              placeholder="Search grants by keyword, title, or description"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 pt-4 md:pt-5 lg:pt-6"> 
-            <OliverDropDown
-              options={industryOptions}
-              placeholder="Select Business Industry"
-              value={industry}
-              onChange={setIndustry}
-            />
-             <OliverDropDown
-              options={locationOptions}
-              placeholder="Select Business Location"
-              value={location}
-              onChange={setLocation}
-            />
-            <OliverDropDown
-              options={activityOptions}
-              placeholder="Select Business Activity"
-              value={activity}
-              onChange={setActivity}
-            />
-          </div>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-10">
+            <div className="md:col-span-1 flex flex-col md:flex-row items-center gap-4 md:gap-6 pt-4 md:pt-5 lg:pt-6">
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="search"
+                className="w-full h-[60px] p-4 outline-none rounded-[4px] border border-[#0C2661] bg-[#FAFCFF] text-[#0C2661] placeholder:text-[#8E938F] text-base font-normal leading-[150%]"
+                placeholder="Search grants by keyword, title, or description"
+              />
+              <div>
+                <span className="text-base font-medium text-[#0C2661] leading-[150%]">OR</span>
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 pt-1 md:pt-5 lg:pt-6">
+                <OliverDropDown
+                  options={industryOptions}
+                  placeholder="Select Business Industry"
+                  value={industry}
+                  onChange={setIndustry}
+                />
+                <OliverDropDown
+                  options={locationOptions}
+                  placeholder="Select Business Location"
+                  value={location}
+                  onChange={setLocation}
+                />
+                <OliverDropDown
+                  options={activityOptions}
+                  placeholder="Select Business Activity"
+                  value={activity}
+                  onChange={setActivity}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

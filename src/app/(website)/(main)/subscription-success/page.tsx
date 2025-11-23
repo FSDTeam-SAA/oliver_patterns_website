@@ -25,7 +25,7 @@ export default function PaymentSuccessPage() {
         </p>
 
         {/* Card */}
-        <div className="mt-6 bg-[#F1F5F9] rounded-lg p-4 text-left">
+        {/* <div className="mt-6 bg-[#F1F5F9] rounded-lg p-4 text-left">
           <h3 className="font-medium text-[#0F172A] text-sm">
             Payment Details
           </h3>
@@ -39,10 +39,9 @@ export default function PaymentSuccessPage() {
             </p>
             <p>
               <span className="font-medium">Transaction ID :</span> #TRX2025001
-              {/* Replace with real paymentId from your API */}
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Buttons */}
         <div className="mt-8">
