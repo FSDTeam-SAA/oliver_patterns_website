@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 export function Hero() {
   return (
     <div className="w-full h-[700px] px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-
       {/* 🔹 Background Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
@@ -24,7 +23,8 @@ export function Hero() {
         </h1>
 
         <p className="text-base font-normal sm:text-base text-[#F4F4F4] mb-8">
-          Find grants, claim your funding, and manage opportunities - all in one place. Never miss your chance to prosper!
+          Find grants, claim your funding, and manage opportunities - all in one
+          place. Never miss your chance to prosper!
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

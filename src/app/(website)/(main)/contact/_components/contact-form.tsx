@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+'use client'
+import React from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -10,90 +10,90 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useMutation } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
 
 // Define the form schema
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters.',
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
   phone: z.string().min(1, {
-    message: "Phone number is required.",
+    message: 'Phone number is required.',
   }),
   companyName: z.string().min(1, {
-    message: "Company name is required.",
+    message: 'Company name is required.',
   }),
   subject: z.string().min(1, {
-    message: "Subject is required.",
+    message: 'Subject is required.',
   }),
   message: z.string().min(1, {
-    message: "Message is required.",
+    message: 'Message is required.',
   }),
-});
+})
 
 // Define TypeScript type from the schema
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof formSchema>
 
 const ContactForm = () => {
-  const session = useSession();
-  const token = session?.data?.user?.accessToken;
+  const session = useSession()
+  const token = session?.data?.user?.accessToken
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      companyName: "",
-      subject: "",
-      message: "",
+      name: '',
+      email: '',
+      phone: '',
+      companyName: '',
+      subject: '',
+      message: '',
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ["contact"],
+    mutationKey: ['contact'],
     mutationFn: async (data: FormData) => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
-      });
+      })
 
       if (!res.ok) {
-        throw new Error(`Failed to send message: ${res.statusText}`);
+        throw new Error(`Failed to send message: ${res.statusText}`)
       }
 
-      return await res.json();
+      return await res.json()
     },
     onSuccess: () => {
-      form.reset();
-      toast.success("Message sent successfully!");
+      form.reset()
+      toast.success('Message sent successfully!')
     },
     onError: (error: Error) => {
-      console.error("Error sending message:", error);
-      toast.error(error.message);
+      console.error('Error sending message:', error)
+      toast.error(error.message)
     },
-  });
+  })
 
   const onSubmit = async (values: FormData) => {
     try {
-      await mutateAsync(values);
+      await mutateAsync(values)
     } catch (error) {
-      console.log("error from contact: ", error);
+      console.log('error from contact: ', error)
     }
-  };
+  }
 
   return (
     <div>
@@ -212,15 +212,16 @@ const ContactForm = () => {
             <Button
               disabled={isPending}
               type="submit"
-              className="disabled:cursor-not-allowed"
+              variant={'default'}
+              className="disabled:cursor-not-allowed text-white rounded-[4px] cursor-pointer hover:scale-105"
             >
-              {isPending ? "Sending Message..." : "Send Message"}
+              {isPending ? 'Sending Message...' : 'Send Message'}
             </Button>
           </div>
         </form>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default ContactForm

@@ -7,14 +7,6 @@ import AdminSidebar from '@/components/sideBar'
 import UserHeader from '@/components/useHeader'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  // const session = useSession()
-
-  // if (!session?.data) {
-  //   redirect('/signin')
-  // }
-
-  // console.log('admin-dashboard session:', session)
-
   return (
     <div className="bg-[#F8F9FC] min-h-screen flex">
       {/* Sidebar - Fixed */}

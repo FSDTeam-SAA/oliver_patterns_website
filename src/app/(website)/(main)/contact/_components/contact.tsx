@@ -1,17 +1,20 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import ContactForm from "./contact-form";
+import { Mail, MapPin, Phone } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import ContactForm from './contact-form'
 
 const Contact = () => {
   return (
     <div className="container mx-auto mt-20 pb-20">
-      <div className="flex flex-col lg:flex-row items-stretch shadow-xl rounded-lg">
-        
+      <div className="flex flex-col lg:flex-row items-stretch shadow-xl rounded">
         {/* Left Side - Contact Info */}
         <div className="lg:w-[30%] w-full">
-          <div className="bg-[#deeeff] p-5 h-full rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none">
+          <div
+            className="bg-[#deeeff] p-5 h-full rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none space-y-3
+          
+          "
+          >
             <h1 className="font-bold text-[#0C2661] text-xl lg:mt-10">
               Contact information
             </h1>
@@ -37,15 +40,15 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-5 mt-5">
-              {["facebook", "instagram", "linkedin", "twitter"].map((icon) => (
-                <Link key={icon} href={""}>
+            <div className="flex items-center gap-5 mt-6">
+              {['facebook', 'instagram', 'linkedin', 'twitter'].map((icon) => (
+                <Link key={icon} href={''}>
                   <Image
                     src={`/assets/${icon}.png`}
                     alt={`${icon}.png`}
                     width={24}
                     height={24}
-                    className="h-6 w-6"
+                    className="h-6 w-6 hover:scale-105 cursor-pointer duration-200"
                   />
                 </Link>
               ))}
@@ -54,7 +57,7 @@ const Contact = () => {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 p-5">
+        <div className="flex-1 pl-5 pb-5 pr-5 space-y-1.5">
           <h1 className="text-xl text-[#0C2661] font-bold">
             Send us a Message
           </h1>
@@ -66,10 +69,9 @@ const Contact = () => {
             <ContactForm />
           </div>
         </div>
-
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
