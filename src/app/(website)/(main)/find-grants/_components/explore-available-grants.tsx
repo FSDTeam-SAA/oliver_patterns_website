@@ -8,6 +8,7 @@ import ErrorContainer from "@/components/common/ErrorContainer/ErrorContainer";
 import NotFound from "@/components/common/NotFound/NotFound";
 import GrantLoadingSkeleton from "./grant-card-skeleton";
 import OliverDropDown from "@/components/ui/Oliver-Dropdown";
+import { useSession } from "next-auth/react";
 export interface GrantResponse {
   status: boolean;
   message: string;
@@ -103,6 +104,9 @@ const activityOptions = ACTIVITY_ENUM.map((item)=>({
 }));
 
 const ExploreAvailableGrants = () => {
+
+  const session = useSession();
+  const token = (session?.data?.user as {accessToken: string})?.accessToken;
   const [search, setSearch] = React.useState<string>("");
   const [industry, setIndustry] = React.useState<string>("");
   const [location, setLocation] = React.useState<string>("");
@@ -114,7 +118,13 @@ const ExploreAvailableGrants = () => {
     queryKey: ["grants", debouncedSearch, industry, location, activity],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/grant?search=${debouncedSearch}&industry=${industry}&location=${location}&activity=${activity}`
+        `${process.env.NEXT_PUBLIC_API_URL}/grant`,{
+          method: "GET",
+          headers : {
+            // "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+          }
+        }
       );
       return res.json();
     },
