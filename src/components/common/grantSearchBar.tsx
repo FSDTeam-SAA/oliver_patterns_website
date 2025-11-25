@@ -101,6 +101,8 @@ const GrantSearchBar: React.FC<Props> = ({ isLanding = false }) => {
     setActivity,
   } = useGrantFilters()
 
+  const hasActiveFilters = industry || location || activity
+
   // 🔒 Reusable auth check with delayed redirect
   const authCheck = () => {
     if (!isAuthenticated) {
@@ -132,6 +134,14 @@ const GrantSearchBar: React.FC<Props> = ({ isLanding = false }) => {
     setActivity(value)
   }
 
+  // 🧹 Clear all filters
+  const handleClearFilters = () => {
+    if (!authCheck()) return
+    setIndustry('')
+    setLocation('')
+    setActivity('')
+  }
+
   // 🔍 Search triggered ONLY by ENTER key
   const handleSearch = () => {
     if (!authCheck()) return
@@ -144,9 +154,33 @@ const GrantSearchBar: React.FC<Props> = ({ isLanding = false }) => {
   return (
     <div className="bg-[linear-gradient(91deg,#CCE5FF_3.19%,#D7E8FB_96.81%)] mb-10 md:mb-16 lg:mb-20">
       <div className="container mx-auto py-6 px-4 md:px-0">
-        <p className="text-lg md:text-[22px] lg:text-2xl font-semibold text-[#0C2661] leading-[150%]">
-          Search 1,285 business grants worth $50B
-        </p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-lg md:text-[22px] lg:text-2xl font-semibold text-[#0C2661] leading-[150%]">
+            Search 1,285 business grants worth $50B
+          </p>
+
+          {hasActiveFilters && (
+            <button
+              onClick={handleClearFilters}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#0C2661] cursor-pointer shadow rounded-md bg-[#96C7FF] hover:shadow-lg transition-all hover:scale-[1.009]"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Clear All Filters
+            </button>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-10">
           {/* Search Input */}
@@ -156,7 +190,7 @@ const GrantSearchBar: React.FC<Props> = ({ isLanding = false }) => {
               onChange={(e) => handleSearchChange(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               type="search"
-              className="w-full h-[60px] p-4 outline-none rounded-[4px] border border-[#0C2661] bg-[#FAFCFF] text-[#0C2661] placeholder:text-[#8E938F] text-base font-normal leading-[150%]"
+              className="w-full h-[60px] p-4 outline-none rounded-[4px] border border-[#b7bcc9] bg-[#FAFCFF] text-[#0C2661] placeholder:text-[#8E938F] text-base font-normal leading-[150%]"
               placeholder="Search grants by keyword, title, or description"
             />
             <div>
