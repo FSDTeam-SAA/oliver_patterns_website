@@ -220,12 +220,12 @@ export const FindGrantsDetailsContainer = ({ id }: { id: string }) => {
 
               {/* Details Card */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
-                <div className="flex justify-between items-start border-b pb-3">
+                {/* <div className="flex justify-between items-start border-b pb-3">
                   <span className="text-sm text-gray-600">Category</span>
                   <span className="text-sm font-semibold text-[#0C2661]">
                     Business
                   </span>
-                </div>
+                </div> */}
 
                 <div className="flex justify-between items-start border-b pb-3">
                   <span className="text-sm text-gray-600">Location</span>
